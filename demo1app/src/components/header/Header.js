@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import img from "../assets/img/logo.png";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Header.css";
+import useStateRef from "react-usestateref";
 
 const Header = () => {
-  const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
+  const [isMobileNavVisible, setIsMobileNavVisible, refIsMobileNavVisible] =
+    useStateRef(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMobileNav = () => {
     setIsMobileNavVisible(!isMobileNavVisible);
   };
-
+  const fetchHeader = () => {};
   const handleScroll = () => {
     if (window.scrollY > 50) {
       setIsScrolled(true);
@@ -30,13 +33,13 @@ const Header = () => {
       id="header"
       className={`fixed-top d-flex align-items-center ${
         isScrolled ? "header-scrolled" : ""
-      } ${isMobileNavVisible ? "navbar-mobile" : ""}`}
+      }`}
     >
       <div className="container d-flex align-items-center justify-content-between">
         <div className="logo">
           <h1>
             <a href="/">
-              <img src={img} alt="" className="img-fluid" />
+              <img src={img} alt="Akeshya Logo" className="img-fluid" />
               AKESHYA
             </a>
           </h1>
@@ -44,7 +47,9 @@ const Header = () => {
 
         <nav
           id="navbar"
-          className={`navbar ${isMobileNavVisible ? "navbar-mobile" : ""}`}
+          className={`navbar ${
+            refIsMobileNavVisible.current ? "navbar-mobile" : ""
+          }`}
         >
           <ul>
             <li>
@@ -53,7 +58,7 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a className="nav-link scrollto" href="/aboutUs">
+              <a className="nav-link scrollto" href="/about">
                 About
               </a>
             </li>
@@ -63,14 +68,14 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a className="getstarted scrollto" href="/contactUs">
+              <a className="getstarted scrollto" href="/contact">
                 Contact us
               </a>
             </li>
           </ul>
           <i
             className={`bi mobile-nav-toggle ${
-              isMobileNavVisible ? "bi-x" : "bi-list"
+              refIsMobileNavVisible.current ? "bi-x" : "bi-list"
             }`}
             onClick={toggleMobileNav}
           ></i>
